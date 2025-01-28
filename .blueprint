@@ -1,0 +1,43 @@
+created:
+    - database/factories/CarFactory.php
+    - database/factories/CarFeatureFactory.php
+    - database/factories/CarTypeFactory.php
+    - database/factories/FuelTypeFactory.php
+    - database/factories/MakerFactory.php
+    - database/factories/ModeloFactory.php
+    - database/factories/StateFactory.php
+    - database/factories/CityFactory.php
+    - database/factories/FavouriteCarFactory.php
+    - database/factories/CarImageFactory.php
+    - database/migrations/2025_01_15_182510_create_cars_table.php
+    - database/migrations/2025_01_15_182511_create_car_features_table.php
+    - database/migrations/2025_01_15_182512_create_car_types_table.php
+    - database/migrations/2025_01_15_182513_create_fuel_types_table.php
+    - database/migrations/2025_01_15_182514_create_makers_table.php
+    - database/migrations/2025_01_15_182515_create_modelos_table.php
+    - database/migrations/2025_01_15_182516_create_states_table.php
+    - database/migrations/2025_01_15_182517_create_cities_table.php
+    - database/migrations/2025_01_15_182518_create_favourite_cars_table.php
+    - database/migrations/2025_01_15_182519_create_car_images_table.php
+    - app/Models/Car.php
+    - app/Models/CarFeature.php
+    - app/Models/CarType.php
+    - app/Models/FuelType.php
+    - app/Models/Maker.php
+    - app/Models/Modelo.php
+    - app/Models/State.php
+    - app/Models/City.php
+    - app/Models/FavouriteCar.php
+    - app/Models/CarImage.php
+models:
+    User: { name: string, email: string, facebook_id: 'string nullable', google_id: 'string nullable', phone: 'string:45 nullable', email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Car: { maker_id: foreign, modelo_id: foreign, year: timestamp, price: 'unsigned integer', vin: 'unsigned integer:255', mileage: 'unsigned integer', car_type_id: foreign, fuel_type_id: foreign, user_id: foreign, city_id: foreign, address: 'string:255', phone: 'string:45', description: 'nullable longtext', published_at: 'nullable timestamp', softdeletes: softDeletes }
+    CarFeature: { car_id: 'foreign  on delete cascade', abs: 'boolean default:0', air_conditioning: 'boolean default:0', power_windows: 'boolean default:0', cruise_control: 'boolean default:0', bluetooth_connectivity: 'boolean default:0', remote_start: 'boolean default:0', gps_navigation: 'boolean default:0', heated_seats: 'boolean default:0', climate_control: 'boolean default:0', rear_parking_sensors: 'boolean default:0', leather_seats: 'boolean default:0', timestamps: false }
+    CarType: { name: 'string:45', timestamps: false }
+    FuelType: { name: 'string:45', timestamps: false }
+    Maker: { name: 'string:45', timestamps: false }
+    Modelo: { name: string, maker_id: foreign, timestamps: false }
+    State: { name: 'string:255' }
+    City: { name: 'nullable string:255', state_id: foreign, timestamps: false }
+    FavouriteCar: { car_id: foreign, user_id: foreign, timestamps: false }
+    CarImage: { car_id: foreign, image_path: 'nullable string:255', position: integer, timestamps: false }

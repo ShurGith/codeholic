@@ -1,0 +1,61 @@
+models:
+  Car:
+    maker_id: foreign
+    modelo_id: foreign
+    year: integer
+    price: integer
+    vin: string:255
+    mileage: unsigned integer
+    car_type_id: foreign
+    fuel_type_id: foreign
+    user_id: foreign
+    city_id: foreign
+    address: string:255
+    phone: string:45
+    description: nullable longtext
+    published_at: nullable timestamp softDeletes
+  #    relationships:
+  #      belongsTo: User
+  CarFeature:
+    car_id: foreign  on delete cascade
+    abs: boolean default:0
+    air_conditioning: boolean default:0
+    power_windows: boolean default:0
+    cruise_control: boolean default:0
+    bluetooth_connectivity: boolean default:0
+    remote_start: boolean default:0
+    gps_navigation: boolean default:0
+    heated_seats: boolean default:0
+    climate_control: boolean default:0
+    rear_parking_sensors: boolean default:0
+    leather_seats: boolean default:0
+    timestamps: false
+  CarType:
+    name: string:45
+    timestamps: false
+  FuelType:
+    name: string:45
+    timestamps: false
+  Maker:
+    name: string:45
+    timestamps: false
+  Modelo:
+    name: string
+    maker_id: foreign
+    timestamps: false
+  State:
+    name: string:255
+  City:
+    name: nullable string:255
+    state_id: foreign
+    timestamps: false
+  FavouriteCar:
+    car_id: foreign
+    user_id: foreign
+    timestamps: false
+  CarImage:
+    car_id: foreign
+    image_path: nullable string:255
+    position: integer
+    timestamps: false
+
