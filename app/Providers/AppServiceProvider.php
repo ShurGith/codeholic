@@ -2,7 +2,10 @@
     
     namespace App\Providers;
     
+    use App\Models\Car;
+    use App\Models\User;
     use Illuminate\Pagination\Paginator;
+    use Illuminate\Support\Facades\Gate;
     use Illuminate\Support\ServiceProvider;
     
     class AppServiceProvider extends ServiceProvider
@@ -21,5 +24,8 @@
         public function boot(): void
         {
             Paginator::defaultView('pagination');
+            Gate::define('update-car', function (User $user, Car $car) {
+                return $user->id === $car->user_id;
+            });
         }
     }

@@ -28,14 +28,14 @@
                 
                 return response()->json([
                   'added' => false,
-                  'message' => 'Car was removed from watchlist'
+                    //'message' => 'Car was removed from watchlist'
                 ]);
             }
             
             $user->favouriteCars()->attach($car);
             return response()->json([
               'added' => true,
-              'message' => 'Car was added to watchlist'
+                //'message' => 'Car was added to watchlist'
             ]);
         }
     }

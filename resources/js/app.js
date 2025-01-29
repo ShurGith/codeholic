@@ -223,13 +223,17 @@ document.addEventListener("DOMContentLoaded", function () {
 			button.addEventListener('click', ev => {
 				const button = ev.currentTarget;
 				const url = button.dataset.url;
+				const container = button.closest('.car-item')
+				console.log(container)
+				console.log('Dentro')
 				axios.post(url).then((response) => {
 						const toShow = button.querySelector('svg.hidden');
 						const toHide = button.querySelector('svg:not(.hidden)');
 						
-						toShow.classList.remove('hidden')
-						toHide.classList.add('hidden')
-						alert(response.data.message)
+						toShow.classList.remove('hidden');
+						toHide.classList.add('hidden');
+						container.classList.add('hidden')
+						
 					})
 					.catch(error => {
 						//	alert("Internal Server Error. Please Try again later!")
