@@ -8,6 +8,7 @@
     use Illuminate\Http\RedirectResponse;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\Gate;
     use Illuminate\Support\Facades\Storage;
     
     
@@ -17,7 +18,7 @@
         public function index(Request $request)
         {
             $user = Auth::user();
-            $cars = Auth::user()
+            $cars = $user
               ->cars()
               ->with(['maker', 'modelo', 'primaryImage'])
               ->orderBy('created_at', 'desc')
@@ -44,9 +45,11 @@
         
         public function edit(Car $car)
         {
-            if ($car->user->id !== Auth::id()) {
-                abort(403);
-            }
+            /*            if ($car->user->id !== Auth::id()) {
+                            abort(403);
+                        }*/
+            
+            Gate::authorize('update', $car);
             $options = Car::getCarFeatures();
             $imagenes = $car->images()//CarImage::where('car_id', $car->id)
             ->orderBy('position')
@@ -61,7 +64,9 @@
         
         public function destroy(Car $car)
         {
-            $car->user->id !== Auth::id() ? abort(403) : '';
+//            $car->user->id !== Auth::id() ? abort(403) : '';
+            
+            Gate::authorize('delete', $car);
             $car->delete();
             return redirect()->route('car.index')
               ->with('success', 'This car was removed from system and Data Base');
@@ -149,7 +154,11 @@
         
         public function carImages(Car $car)
         {
-            $car->user->id !== Auth::id() ? abort(403) : '';
+//            $car->user->id !== Auth::id() ? abort(403) : '';
+            
+            if (!Gate::allows('update-car', $car)) {
+                abort(403);
+            }
             $images = $car->images()// DB::table('car_images')
             //  ->where('car_id', '=', $car->id)
             ->orderBy('position')
@@ -196,7 +205,11 @@
         
         public function update(Request $request, Car $car)
         {
-            $car->user->id !== Auth::id() ? abort(403) : '';
+//            $car->user->id !== Auth::id() ? abort(403) : '';
+            
+            if (!Gate::allows('update-car', $car)) {
+                abort(403);
+            }
             $data = $request->all();
             $antesDatos = $data['features'];
             foreach (Car::getCarFeatures() as $option) {
@@ -210,7 +223,11 @@
         
         public function addImages(Request $request, Car $car)
         {
-            $car->user->id !== Auth::id() ? abort(403) : '';
+//            $car->user->id !== Auth::id() ? abort(403) : '';
+            
+            if (!Gate::allows('update-car', $car)) {
+                abort(403);
+            }
             // Get images from request
             $images = $request->file('images') ?? [];
             
@@ -256,8 +273,9 @@
             
         }
         
-        public function create(Request $request)
+        public function create()
         {
+            Gate::authorize('create', Car::class);
             $options = Car::getCarFeatures();
             
             return view('car.create', compact('options'));

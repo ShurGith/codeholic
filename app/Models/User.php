@@ -50,6 +50,16 @@
             return $this->hasMany(Car::class);
         }
         
+        public function isAdmin()
+        {
+            return $this->id = 1;
+        }
+        
+        public function isGuest()
+        {
+            return $this->id > 1;
+        }
+        
         /**
          * Get the attributes that should be cast.
          *º
