@@ -2,6 +2,7 @@
   {{--  <x-test-component class="card">--}}
   {{--    Lorem ipsum dolor sit amet--}}
   {{--  </x-test-component>--}}
+  
   <main>
     <section class="hero-slider">
       <!-- Carousel wrapper -->
@@ -15,11 +16,11 @@
                 in your region
               </h1>
               <div class="hero-slider-content">
-                <p>
+                <p class="!mb-8">
                   Use powerful search tool to find your desired cars based on multiple search criteria: Maker, Model,
                   Year, Price Range, Car Type, etc...
                 </p>
-                <button class="btn btn-hero-slider">Find the car</button>
+                <a href="{{ route($sliderLink) }}" class="btn btn-hero-slider mt-8">{{ $sliderText }}</a>
               </div>
             </div>
             <div class="slide-image">
@@ -40,8 +41,7 @@
                   Submit your car in our user friendly interface, describe it,
                   upload photos and the perfect buyer will find it...
                 </p>
-                
-                <button class="btn btn-hero-slider">Add Your Car</button>
+                <a href="{{ route($sliderLink) }}" class="btn btn-hero-slider p-2">{{ $sliderText }}</a>
               </div>
             </div>
             <div class="slide-image">
@@ -93,7 +93,8 @@
           {{-- $cars->onEachSide(1)->links('pagination') --}}
           <div class="car-items-listing">
             @foreach($cars as $car)
-              <x-car-item :$car :is-in-watchlist="$car->favouredUsers->contains(\Illuminate\Support\Facades\Auth::user())"/>
+              <x-car-item :$car
+                          :is-in-watchlist="$car->favouredUsers->contains(Auth::user())"/>
             @endforeach
             {{-- @each('components.car-item',$cars, 'car')--}}
           </div>
@@ -101,5 +102,5 @@
       </section>
       <!--/ New Cars
       {{-- $cars->onEachSide(1)->links('pagination') --}}
-    </main>
-</x-app-layout>
+      </main>
+  </x-app-layout>
