@@ -8,7 +8,8 @@
     use Illuminate\Support\Collection;
     use Illuminate\View\Component;
     
-    class SelectMaker extends Component
+    class
+    SelectMaker extends Component
     {
         public Collection $makers;
         
