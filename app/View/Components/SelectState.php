@@ -6,6 +6,7 @@
     use Closure;
     use Illuminate\Contracts\View\View;
     use Illuminate\Support\Collection;
+    use Illuminate\Support\Facades\Cache;
     use Illuminate\View\Component;
     
     class SelectState extends Component
@@ -14,7 +15,9 @@
         
         public function __construct()
         {
-            $this->states = State::orderBy('name')->get();
+            $this->states = Cache::rememberForever('states', function () {
+                return State::orderBy('name')->get();
+            });
         }
         
         /**
