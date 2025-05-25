@@ -20,7 +20,9 @@
             </tr>
             </thead>
             <tbody>
+            @dd($cars)
             @forelse($cars as $car)
+              @dd()
               @php
                 if($car->published_at !=='null' ){
                   $bgcolor = "bg-green-600";

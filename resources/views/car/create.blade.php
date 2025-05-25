@@ -83,6 +83,9 @@
                 <div class="form-group">
                   <p class="text-xm font-bold mb-1">State/Region</p>
                   <x-select-state :value="old('state_id')"/>
+                  <p class="error-message text-red-500">
+                    {{ $errors->first('state_id') }}
+                  </p>
                 </div>
               </div>
               <div class="col">
